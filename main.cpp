@@ -32,3 +32,73 @@ int main()
 {
 
 }
+
+template < class T >
+void pushBack(BiList<T>** head, BiList<T>** tail, const T& value)
+{
+    BiList< T >* slot = new BiList< T >;
+    slot -> val = value;
+    slot -> next = nullptr;
+    slot -> prev = nullptr;
+    if (*head == *tail){
+        *head = slot;
+        *tail = slot;
+    } else {
+        (*tail) -> next = slot;
+        slot -> prev = *tail;
+        *tail = slot;
+    }
+}
+
+template < class T >
+void pushFront(BiList<T>** head, BiList<T>** tail, const T& value)
+{
+    BiList< T >* slot = new BiList< T >;
+    slot -> val = value;
+    slot -> next = nullptr;
+    slot -> prev = nullptr;
+    if (*head == *tail) {
+        *head = slot;
+        *tail = slot;
+    } else {
+        (*head) -> prev = slot;
+        slot -> next = *head;
+        *head = slot;
+    }
+}
+
+template < class T >
+T popBack(BiList<T>** head, BiList<T>** tail)
+{
+    if (*tail == nullptr){
+        return T{};
+    }
+    BiList< T >* eraser = *tail;
+    *tail = (*tail) -> prev;
+    if (*tail == nullptr) {
+        *head = nullptr;
+    } else {
+        (*tail) -> next = nullptr;
+    }
+    T k = eraser->val;
+    delete eraser;
+    return k;
+}
+
+template < class T >
+T popFront(BiList<T>** head, BiList<T>** tail)
+{
+    if (*head == nullptr){
+        return T{};
+    }
+    BiList< T >* eraser = *head;
+    *head = (*head) -> next;
+    if (*head == nullptr) {
+        *tail = nullptr;
+    } else {
+        (*head) -> prev = nullptr;
+    }
+    T k = eraser->val;
+    delete eraser;
+    return k;
+}
