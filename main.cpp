@@ -56,8 +56,8 @@ int main()
 template <class T>
 void pushBack(BiList<T> **head, BiList<T> **tail, const T value)
 {
-  BiList<T> *slot = new BiList<T>; //T::T()
-  slot->val = value; //T::operator=(const T)
+  BiList<T> *slot = new BiList<T>; // T::T()
+  slot->val = value;               // T::operator=(const T)
   slot->next = nullptr;
   slot->prev = nullptr;
   if (*head == nullptr)
@@ -76,8 +76,8 @@ void pushBack(BiList<T> **head, BiList<T> **tail, const T value)
 template <class T>
 void pushFront(BiList<T> **head, BiList<T> **tail, const T value)
 {
-  BiList<T> *slot = new BiList<T>; //T::T()
-  slot->val = value; //T::operator=(const T)
+  BiList<T> *slot = new BiList<T>; // T::T()
+  slot->val = value;               // T::operator=(const T)
   slot->next = nullptr;
   slot->prev = nullptr;
   if (*head == nullptr)
@@ -109,7 +109,7 @@ template <class T> T popBack(BiList<T> **head, BiList<T> **tail)
   {
     (*tail)->next = nullptr;
   }
-  T k = eraser->val; //T::T(const T&)
+  T k = eraser->val; // T::T(const T&)
   delete eraser;
   return k;
 }
@@ -130,7 +130,7 @@ template <class T> T popFront(BiList<T> **head, BiList<T> **tail)
   {
     (*head)->prev = nullptr;
   }
-  T k = eraser->val; //T::T(const T&)
+  T k = eraser->val; // T::T(const T&)
   delete eraser;
   return k;
 }
@@ -155,8 +155,8 @@ void insert(BiList<T> **head, BiList<T> **tail, const T value, BiList<T> *pos)
   {
     return;
   }
-  BiList<T> *slot = new BiList<T>; //T::T()
-  slot->val = value; //T::operator=(const T)
+  BiList<T> *slot = new BiList<T>; // T::T()
+  slot->val = value;               // T::operator=(const T)
   slot->next = nullptr;
   slot->prev = nullptr;
   if (*head == nullptr)
@@ -200,7 +200,7 @@ template <class T> T erase(BiList<T> **head, BiList<T> **tail, BiList<T> *pos)
     {
       return T{}; // T::T()
     }
-    T res = (*head)->val; //T::T(const T&)
+    T res = (*head)->val; // T::T(const T&)
     *tail = nullptr;
     delete *head;
     *head = nullptr;
@@ -235,7 +235,7 @@ template <class T> T erase(BiList<T> **head, BiList<T> **tail, BiList<T> *pos)
       aftBuf->prev = preBuf;
     }
 
-    T res = buf->val; //T::T(const T&)
+    T res = buf->val; // T::T(const T&)
     delete buf;
     return res;
   }
