@@ -8,10 +8,10 @@ struct BiList {
 };
 
 template < class T >
-void pushBack(BiList<T>** head, BiList<T>** tail, const T& value);
+void pushBack(BiList<T>** head, BiList<T>** tail, const T value);
 
 template < class T >
-void pushFront(BiList<T>** head, BiList<T>** tail, const T& value);
+void pushFront(BiList<T>** head, BiList<T>** tail, const T value);
 
 template < class T >
 T popBack(BiList<T>** head, BiList<T>** tail);
@@ -23,24 +23,45 @@ template < class T >
 void print(BiList<T>* head, BiList<T>* tail);
 
 template < class T >
-void insert(BiList<T>** head, BiList<T>** tail, const T& value, BiList<T>* buf);
+void insert(BiList<T>** head, BiList<T>** tail, const T value, BiList<T>* buf);
 
 template < class T >
 T erase(BiList<T>** head, BiList<T>** tail, BiList<T>* buf);
 
+template < class T >
+void clear(BiList<T>** head, BiList<T>** tail);
+
 int main()
 {
-
+    size_t n = 10;
+    int* a = new int[n];
+    for(size_t i = 0; i < n; ++i){
+        a[i] = i;
+    }
+    BiList<int>* head = nullptr;
+    BiList<int>* tail = nullptr;
+    try{
+        for(size_t i = 0; i < n; ++i){
+            pushBack(&head, &tail, a[i]);
+        }
+    } catch(...) {
+        clear(&head, &tail);
+        delete[] a;
+        return 1;
+    }
+    print(head, tail);
+    delete[] a;
+    clear(&head, &tail);
 }
 
 template < class T >
-void pushBack(BiList<T>** head, BiList<T>** tail, const T& value)
+void pushBack(BiList<T>** head, BiList<T>** tail, const T value)
 {
     BiList< T >* slot = new BiList< T >;
     slot -> val = value;
     slot -> next = nullptr;
     slot -> prev = nullptr;
-    if (*head == *tail){
+    if (*head == nullptr){
         *head = slot;
         *tail = slot;
     } else {
@@ -51,13 +72,13 @@ void pushBack(BiList<T>** head, BiList<T>** tail, const T& value)
 }
 
 template < class T >
-void pushFront(BiList<T>** head, BiList<T>** tail, const T& value)
+void pushFront(BiList<T>** head, BiList<T>** tail, const T value)
 {
     BiList< T >* slot = new BiList< T >;
     slot -> val = value;
     slot -> next = nullptr;
     slot -> prev = nullptr;
-    if (*head == *tail) {
+    if (*head == nullptr) {
         *head = slot;
         *tail = slot;
     } else {
@@ -106,16 +127,21 @@ T popFront(BiList<T>** head, BiList<T>** tail)
 template < class T >
 void print(BiList<T>* head, BiList<T>* tail)
 {
-    while(head != tail){
-        std::cout << head -> val << " ";
-        head = head -> next;
+    if(head != nullptr){
+        while(head != tail){
+            std::cout << head -> val << " ";
+            head = head -> next;
+        }
+        std::cout << head -> val << "\n";
     }
-    std::cout << head -> val << "\n";
 }
 
 template < class T >
-void insert(BiList<T>** head, BiList<T>** tail, const T& value, BiList<T>* pos)
+void insert(BiList<T>** head, BiList<T>** tail, const T value, BiList<T>* pos)
 {
+    if(pos == nullptr){
+        return;
+    }
     BiList<T>* slot = new BiList<T>;
     slot -> val = value;
     slot -> next = nullptr;
@@ -181,5 +207,13 @@ T erase(BiList<T>** head, BiList<T>** tail, BiList<T>* pos)
         T res = buf->val;
         delete buf;
         return res;
+    }
+}
+
+template < class T >
+void clear(BiList<T>** head, BiList<T>** tail)
+{
+    while(*head != nullptr){
+        popBack(head, tail);
     }
 }
