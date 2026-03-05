@@ -26,6 +26,8 @@ template <class T> T erase(BiList<T> **head, BiList<T> **tail, BiList<T> *buf);
 
 template <class T> void clear(BiList<T> **head, BiList<T> **tail);
 
+template <class T> void convert(BiList<T> **head, BiList<T> **tail, int* a, size_t n);
+
 int main()
 {
   size_t n = 10;
@@ -36,17 +38,11 @@ int main()
   }
   BiList<int> *head = nullptr;
   BiList<int> *tail = nullptr;
-  try
-  {
-    for (size_t i = 0; i < n; ++i)
-    {
-      pushBack(&head, &tail, a[i]);
-    }
-  } catch (...)
-  {
-    clear(&head, &tail);
+  try{
+    convert(&head, &tail, a, n);
+  } catch(...) {
     delete[] a;
-    return 1;
+    clear(&head, &tail);
   }
   print(head, tail);
   delete[] a;
@@ -246,5 +242,23 @@ template <class T> void clear(BiList<T> **head, BiList<T> **tail)
   while (*head != nullptr)
   {
     popBack(head, tail);
+  }
+}
+
+template <class T>
+void convert(BiList<T> **head, BiList<T> **tail, int* a, size_t n)
+{
+  *head = nullptr;
+  *tail = nullptr;
+  try
+  {
+    for (size_t i = 0; i < n; ++i)
+    {
+      pushBack(head, tail, a[i]);
+    }
+  } catch (...)
+  {
+    clear(head, tail);
+    throw;
   }
 }
